@@ -13,17 +13,15 @@ const app = express();
 app.use(cors());
 
 
+// Lectura y parseo de body 
+app.use(express.json());
+
 //BD
 dbConnection();
 
 
 // rutas
-app.get('/', (req, res) => {
-    res.status(200).json({
-        status: 'success',
-        msg: 'works'
-    })
-});
+app.use('/api/usuarios', require('./routes/usuarios'));
 
 
 
