@@ -19,6 +19,9 @@ router.get('/', getHospitales);
 router.post(
     '/',
     [
+        validarJWT,
+        check('nombre', 'el nombre del hospital es necesario').not().isEmpty(),
+        validarCampos
     ]
     , crearHospital);
 
@@ -28,7 +31,7 @@ router.put('/:id', [
 
 // ruta /api/hospitales/:id
 // , validarJWT
-router.delete('/:id', borrarHospital);
+router.delete('/:id', validarJWT, borrarHospital);
 
 
 module.exports = router;

@@ -34,7 +34,7 @@ const login = async (req, res = response) => {
         const token = await generarJWT(usuarioDB.id);
 
         res.status(200).json({
-            ok: false,
+            ok: true,
             msg: 'Login funcionando',
             token
         });
