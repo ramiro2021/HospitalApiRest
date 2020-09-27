@@ -11,12 +11,19 @@ const router = Router();
 
 // ruta /api/medicos
 // validarJWT
-router.get('/', getMedicos);
+router.get('/',
+    [
+        validarJWT,
+    ], getMedicos);
 // ruta /api/medicos
 // campos validados con middleware personalizado => ../middlewares/validar-campos
 router.post(
     '/',
     [
+        validarJWT,
+        check('nombre', 'el nombre del medico es necesario').not().isEmpty(),
+        check('hospital', "el hospital id debe ser valido").isMongoId(),
+        validarCampos
     ]
     , crearMedico);
 

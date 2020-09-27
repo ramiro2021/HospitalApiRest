@@ -13,7 +13,7 @@ const router = Router();
 
 // ruta /api/hospitales
 // validarJWT
-router.get('/', getHospitales);
+router.get('/', [validarJWT], getHospitales);
 // ruta /api/hospitales
 // campos validados con middleware personalizado => ../middlewares/validar-campos
 router.post(

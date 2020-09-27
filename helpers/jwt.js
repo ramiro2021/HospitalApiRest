@@ -17,8 +17,6 @@ const generarJWT = (uid) => {
                 resolve(token);
             }
 
-
-
         });
     });
 
