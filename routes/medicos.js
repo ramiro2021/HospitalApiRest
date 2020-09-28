@@ -29,11 +29,15 @@ router.post(
 
 // ruta /api/medicos/:id
 router.put('/:id', [
+    validarJWT,
+    check('nombre', 'el nombre del medico es necesario').not().isEmpty(),
+    check('hospital', "el hospital id debe ser valido").isMongoId(),
+    validarCampos
 ], actualizarMedico);
 
 // ruta /api/medicos/:id
 // , validarJWT
-router.delete('/:id', borrarMedico);
+router.delete('/:id', validarJWT, borrarMedico);
 
 
 module.exports = router;

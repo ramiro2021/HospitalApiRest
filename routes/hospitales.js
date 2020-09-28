@@ -27,6 +27,9 @@ router.post(
 
 // ruta /api/hospitales/:id
 router.put('/:id', [
+    validarJWT,
+    check('nombre', 'el nombre del hospital es necesario').not().isEmpty(),
+    validarCampos
 ], actualizarHospital);
 
 // ruta /api/hospitales/:id

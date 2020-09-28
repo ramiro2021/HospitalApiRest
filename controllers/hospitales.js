@@ -12,11 +12,41 @@ const getHospitales = async (req, res) => {
 }
 
 const actualizarHospital = async (req, res) => {
+    // id hospital
+    const id = req.params.id;
+    // usuario id del JWToken
+    const uid = req.uid
+    try {
+        const hospital = await Hospital.findById(id);
 
-    res.status(200).json({
-        ok: true,
-        msg: 'actualizar Hospital funcionando'
-    });
+        if (!hospital) {
+            return res.status(404).json({
+                ok: true,
+                msg: 'No existe un hospital con ese id',
+                id
+            });
+        }
+
+        const cambiosHospital = {
+            ...req.body,
+            usuario: uid
+        }
+
+        const hospitalActualizado = await Hospital.findByIdAndUpdate(id, cambiosHospital, { new: true });
+
+        res.status(200).json({
+            ok: true,
+            msg: 'actualizar Hospital funcionando',
+            hospital: hospitalActualizado
+        });
+    } catch (error) {
+        return res.status(500).json({
+            ok: false,
+            msg: 'Ocurrio un error al actualizar'
+        });
+    }
+
+
 }
 
 const crearHospital = async (req, res) => {
@@ -46,12 +76,38 @@ const crearHospital = async (req, res) => {
 
 }
 
-const borrarHospital = (req, res) => {
+const borrarHospital = async (req, res) => {
 
-    res.json({
-        ok: true,
-        msg: 'borrar Hospital funcionando'
-    });
+    // id hospital
+    const id = req.params.id;
+
+    try {
+        const hospital = await Hospital.findById(id);
+
+        if (!hospital) {
+            return res.status(404).json({
+                ok: true,
+                msg: 'No existe un hospital con ese id',
+                id
+            });
+        }
+
+        await Hospital.findByIdAndDelete(id);
+
+
+        res.status(200).json({
+            ok: true,
+            msg: 'Hospital eliminado',
+
+        });
+    } catch (error) {
+        return res.status(500).json({
+            ok: false,
+            msg: 'Ocurrio un error al eliminar'
+        });
+    }
+
+
 
 }
 
